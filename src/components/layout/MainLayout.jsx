@@ -15,7 +15,7 @@ const menu = (
   </Menu>
 );
 
-function MainLayout(props) {
+function MainLayout({ children, location }) {
   return (
     <div className="ant-layout-aside">
       <header className="main-header">
@@ -63,7 +63,7 @@ function MainLayout(props) {
         <div className="ant-layout-container">
           <div className="ant-layout-content">
             <div style={{ minHeight: 590 }}>
-              { props.children }
+              { children }
             </div>
           </div>
         </div>
@@ -76,6 +76,7 @@ function MainLayout(props) {
 }
 
 MainLayout.propTypes = {
+  children: PropTypes.element.isRequired
 };
 
 export default connect()(MainLayout);

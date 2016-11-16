@@ -6,8 +6,6 @@ import 'antd/dist/antd.css';
 // 1. Initialize
 const app = dva();
 
-app.model(require("./models/tasks"));
-
 // 2. Plugins
 //app.use({});
 
