@@ -4,6 +4,8 @@ import { connect } from 'dva';
 import MainLayout from '../../components/layout/MainLayout';
 import TaskList from '../../components/task/TaskList';
 import TaskSearch from '../../components/task/TaskSearch';
+import TaskPanel from '../../components/task/TaskPanel';
+import TaskModal from '../../components/task//TaskModal';
 
 function Tasks({ location, dispatch, tasks }) {
   const {
@@ -13,7 +15,7 @@ function Tasks({ location, dispatch, tasks }) {
     current,
     currentItem,
     modalVisible,
-    modalType
+    modalType,
   } = tasks;
 
   const taskListProps = {
@@ -23,11 +25,64 @@ function Tasks({ location, dispatch, tasks }) {
     dataSource: list,
   }
 
+  const taskSearchProps = {
+    onSearch(fieldsValue) {
+      dispatch({
+        type: 'tasks/query',
+        payload: fieldsValue,
+      })
+    },
+
+    onAdd() {
+      dispatch({
+        type: 'users/showModal',
+        payload: {
+          modalType: 'create',
+        }
+      })
+    },
+  }
+
+  const taskModalProps = {
+    item: modalType === 'create' ? {} : currentItem,
+    type: modalType,
+    visible: modalVisible,
+    onOk(data) {
+      dispatch({
+        type: `tasks/${modalType}`,
+        payload: data,
+      });
+    },
+
+    onCancel(){
+      dispatch({
+        type: 'tasks/hideModal',
+      })
+    },
+
+  }
+
+  const taskPanelProps = {
+    onAdd() {
+      dispatch({
+        type: 'tasks/showModal',
+        payload: {
+          modalType: 'create',
+        }
+      });
+    }
+  }
+
+  const TaskModalGen = () =>
+    <TaskModal {...taskModalProps} />;
+
   return (
     <MainLayout>
       <div>
-        <TaskSearch />
+        <TaskPanel {...taskPanelProps} />
+        <TaskSearch {...taskSearchProps} />
         <TaskList {...taskListProps} />
+        <TaskModalGen />
       </div>
     </MainLayout>
   );

@@ -6,9 +6,12 @@ export default {
   namespace: 'tasks',
   state: {
     list: [],
+    field: '',
+    keyword: '',
+    expand: false,
     total: null,
     loading: false,
-    current: null,
+    current: 1,
     currentItem: {},
     modalVisible: false,
     modalType: 'create',
@@ -18,8 +21,12 @@ export default {
     showLoading(state, action) {
       return { ...state, loading: true };
     },
-    showModal(){},
-    hideModal(){},
+    showModal(state, action){
+      return { ...state, ...action.payload, modalVisible: true };
+    },
+    hideModal(state, action){
+      return { ...state, modalVisible: false };
+    },
     querySuccess(state, action) {
       return { ...state, ...action.payload, loading: false };
     },

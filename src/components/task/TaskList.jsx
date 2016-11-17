@@ -2,7 +2,12 @@ import React, { Component, PropTypes } from 'react';
 import { Table, message, Popconfirm, Menu, Dropdown, Icon, Progress, Badge } from 'antd';
 import { getTaskStatus, getProcessStatus } from '../../utils/helper';
 
-function TaskList({ total, current, loading, dataSource }) {
+const TaskList = ({
+  total,
+  current,
+  loading,
+  dataSource
+}) => {
   const menu = (
     <Menu>
       <Menu.Item key="0">
@@ -35,6 +40,13 @@ function TaskList({ total, current, loading, dataSource }) {
     title: '类型',
     dataIndex: 'task_type',
     key: 'type',
+    filters: [
+      { text: 'TOP_BOTTOM', value: 'TOP_BOTTOM' },
+      { text: 'FACEBOOK_2D', value: 'FACEBOOK_2D' },
+      { text: 'FACEBOOK_3D', value: 'FACEBOOK_3D' },
+      { text: 'VISIONDK_2D', value: 'VISIONDK_2D' },
+      { text: 'VISIONDK_3D', value: 'VISIONDK_3D' },
+    ],
   }, {
     title: '执行机器IP',
     dataIndex: 'exec_ip',
