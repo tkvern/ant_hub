@@ -87,11 +87,6 @@ const TaskModal = ({
             </FormItem>
           </Col>
           <Col span={24}>
-            <FormItem {...formItemLayout} label="颜色调整">
-              <Switch checkedChildren={'开'} unCheckedChildren={'关'} />
-            </FormItem>
-          </Col>
-          <Col span={24}>
             <FormItem {...formItemLayout} label="相机类型">
               <RadioGroup defaultValue="GOPRO">
                 <RadioButton value="GOPRO">GOPRO</RadioButton>
@@ -101,13 +96,27 @@ const TaskModal = ({
             </FormItem>
           </Col>
           <Col span={24}>
-            <FormItem {...formItemLayout} wrapperCol={{ span: 19}} label="任务类型">
-              <CheckboxGroup options={plainOptions} value={defaultCheckedList} />
+            <FormItem {...formItemLayout} label="质量">
+              <RadioGroup defaultValue="8K">
+                <RadioButton value="8K">8K</RadioButton>
+                <RadioButton value="6K">6K</RadioButton>
+                <RadioButton value="4K">4K</RadioButton>
+              </RadioGroup>
             </FormItem>
           </Col>
           <Col span={24}>
-            <FormItem {...formItemLayout} label="是否紧急">
-              <Switch checkedChildren={'是'} unCheckedChildren={'否'} />
+            <FormItem {...formItemLayout} wrapperCol={{ span: 19}} label="任务类型">
+              <CheckboxGroup options={plainOptions} />
+            </FormItem>
+          </Col>
+          <Col span={24}>
+            <FormItem {...formItemLayout} label="颜色调整">
+              <Switch checkedChildren={'开'} unCheckedChildren={'关'} />
+            </FormItem>
+          </Col>
+          <Col span={24}>
+            <FormItem {...formItemLayout} extra="请就任务紧急程度度选择，以免延迟其他任务" label="是否紧急">
+              <Switch checkedChildren={'是'} unCheckedChildren={'否'} style={{ marginRight: 8 }} />
             </FormItem>
           </Col>
           <Col span={24}>
