@@ -10,6 +10,7 @@ import TaskModal from '../../components/task//TaskModal';
 function Tasks({ location, dispatch, tasks }) {
   const {
     list,
+    expand,
     total,
     loading,
     current,
@@ -26,6 +27,16 @@ function Tasks({ location, dispatch, tasks }) {
   }
 
   const taskSearchProps = {
+    expand,
+    onExpand() {
+      dispatch({
+        type: 'tasks/collapseExpand',
+        payload: {
+          'expand': !expand,
+        }
+      });
+    },
+
     onSearch(fieldsValue) {
       dispatch({
         type: 'tasks/query',
@@ -48,6 +59,7 @@ function Tasks({ location, dispatch, tasks }) {
     type: modalType,
     visible: modalVisible,
     onOk(data) {
+      console.log(data);
       dispatch({
         type: `tasks/${modalType}`,
         payload: data,

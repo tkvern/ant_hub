@@ -27,6 +27,9 @@ export default {
     hideModal(state, action){
       return { ...state, modalVisible: false };
     },
+    collapseExpand(state, action) {
+      return { ...state, ...action.payload };
+    },
     querySuccess(state, action) {
       return { ...state, ...action.payload, loading: false };
     },

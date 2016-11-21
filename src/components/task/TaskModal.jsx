@@ -14,9 +14,9 @@ const plainOptions = ['PREVIEW', '3D_FAST', '2D_FAST', '3D_BETTER', '2D_BETTER']
 const defaultCheckedList = ['PREVIEW'];
 
 const TaskModal = ({
-  visible,
   item = {},
   onOk,
+  visible,
   onCancel,
   form: {
     getFieldDecorator,
@@ -25,9 +25,8 @@ const TaskModal = ({
   },
 }) => {
   function handleOk() {
-    console.log('test')
-    const data = { ...getFieldDecorator(), key: item.key };
-    onOk(data)
+    const data = { ...getFieldsValue() };
+    onOk(data);
   }
 
   const modalOpts = {
@@ -43,6 +42,10 @@ const TaskModal = ({
     wrapperCol: { span: 15 },
   };
 
+  const config = {
+    rules: [{ type: 'string', required: true, message: '不能为空' }],
+  };
+
   return (
     <Modal {...modalOpts}>
       <Form>
@@ -50,7 +53,9 @@ const TaskModal = ({
           <Col span={24}>
             <FormItem {...formItemLayout} label="视频路径">
               <InputGroup className="ant-search-input">
-                <Input placeholder="请输入视频路径" />
+                {getFieldDecorator('payload.video_dir', config)(
+                  <Input placeholder="请输入视频路径" />
+                )}
                 <div className="ant-input-group-wrap">
                   <Tooltip placement="top" title="转换Windows路径">
                     <Button icon="retweet" className="ant-search-btn" size="large"/>
@@ -61,19 +66,25 @@ const TaskModal = ({
           </Col>
           <Col span={24}>
             <FormItem {...formItemLayout} label="输出路径">
-              <Input placeholder="请输入输出路径" />
+              {getFieldDecorator('payload.output_dir', config)(
+                <Input placeholder="请输入输出路径" />
+              )}
             </FormItem>
           </Col>
           <Col span={24}>
             <FormItem {...formItemLayout} label="任务名称">
-              <Input placeholder="请输入任务名称" />
+              {getFieldDecorator('title', config)(
+                <Input placeholder="请输入任务名称" />
+              )}
             </FormItem>
           </Col>
           <Col span={24}>
             <FormItem {...formItemLayout} label="开始桢-结束桢">
               <Col span="8">
                 <FormItem >
-                  <InputNumber min={0} style={{ width: "100%" }} />
+                  {getFieldDecorator('payload.start_frame', { initialValue: 0 })(
+                    <InputNumber min={0} style={{ width: "100%" }} />
+                  )}
                 </FormItem>
               </Col>
               <Col span="1">
@@ -81,37 +92,47 @@ const TaskModal = ({
               </Col>
               <Col span="8">
                 <FormItem>
-                  <InputNumber min={0} style={{ width: "100%" }} />
+                  {getFieldDecorator('payload.end_frame', { initialValue: 0 })(
+                    <InputNumber min={0} style={{ width: "100%" }} />
+                  )}
                 </FormItem>
               </Col>
             </FormItem>
           </Col>
           <Col span={24}>
             <FormItem {...formItemLayout} label="相机类型">
-              <RadioGroup defaultValue="GOPRO">
-                <RadioButton value="GOPRO">GOPRO</RadioButton>
-                <RadioButton value="BMPCC">BMPCC</RadioButton>
-                <RadioButton value="AURA">AURA</RadioButton>
-              </RadioGroup>
+              {getFieldDecorator('payload.camera_type', { initialValue: 'GOPRO' })(
+                <RadioGroup>
+                  <RadioButton value="GOPRO">GOPRO</RadioButton>
+                  <RadioButton value="BMPCC">BMPCC</RadioButton>
+                  <RadioButton value="AURA">AURA</RadioButton>
+                </RadioGroup>
+              )}
             </FormItem>
           </Col>
           <Col span={24}>
             <FormItem {...formItemLayout} label="质量">
-              <RadioGroup defaultValue="8K">
-                <RadioButton value="8K">8K</RadioButton>
-                <RadioButton value="6K">6K</RadioButton>
-                <RadioButton value="4K">4K</RadioButton>
-              </RadioGroup>
+              {getFieldDecorator('payload.quality', { initialValue: '8k' })(
+                <RadioGroup>
+                  <RadioButton value="8k">8K</RadioButton>
+                  <RadioButton value="6k">6K</RadioButton>
+                  <RadioButton value="4k">4K</RadioButton>
+                </RadioGroup>
+              )}
             </FormItem>
           </Col>
           <Col span={24}>
             <FormItem {...formItemLayout} wrapperCol={{ span: 19}} label="任务类型">
-              <CheckboxGroup options={plainOptions} />
+              {getFieldDecorator('task_types[]', { initialValue: ['PREVIEW'] })(
+                <CheckboxGroup options={plainOptions} />
+              )}
             </FormItem>
           </Col>
           <Col span={24}>
             <FormItem {...formItemLayout} label="颜色调整">
-              <Switch checkedChildren={'开'} unCheckedChildren={'关'} />
+              {getFieldDecorator('payload.enable_coloradjust',  { valuePropName: 'checked' })(
+                <Switch checkedChildren={'开'} unCheckedChildren={'关'} />
+              )}
             </FormItem>
           </Col>
           <Col span={24}>
