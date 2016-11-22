@@ -32,7 +32,7 @@ const TaskModal = ({
 }) => {
   function handleOk() {
     validateFields((errors) => {
-      if(errors) {
+      if (errors) {
         return;
       }
       const data = { ...getFieldsValue() };

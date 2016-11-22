@@ -1,5 +1,5 @@
 export function getTaskStatus(status) {
-  if(status == '1') {
+  if (status == '1') {
     return { 'status': "default", 'text':"等待中" };
   } else if (status == '2') {
     return { 'status': "processing", 'text':"运行中" };
@@ -15,7 +15,7 @@ export function getTaskStatus(status) {
 }
 
 export function getProcessStatus(status) {
-  if(status == '1') {
+  if (status == '1') {
     return { 'status': "normal" };
   } else if (status == '2') {
     return { 'status': "active" };
