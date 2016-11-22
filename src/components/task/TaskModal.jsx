@@ -10,7 +10,13 @@ const RadioGroup = Radio.Group;
 const InputGroup = Input.Group;
 const CheckboxGroup = Checkbox.Group;
 
-const plainOptions = ['PREVIEW', '3D_FAST', '2D_FAST', '3D_BETTER', '2D_BETTER'];
+const plainOptions = [
+  'PREVIEW',
+  '3D_FAST',
+  '2D_FAST',
+  '3D_BETTER',
+  '2D_BETTER',
+];
 const defaultCheckedList = ['PREVIEW'];
 
 const TaskModal = ({
@@ -25,8 +31,13 @@ const TaskModal = ({
   },
 }) => {
   function handleOk() {
-    const data = { ...getFieldsValue() };
-    onOk(data);
+    validateFields((errors) => {
+      if(errors) {
+        return;
+      }
+      const data = { ...getFieldsValue() };
+      onOk(data);
+    });
   }
 
   const modalOpts = {
@@ -130,26 +141,29 @@ const TaskModal = ({
           </Col>
           <Col span={24}>
             <FormItem {...formItemLayout} label="颜色调整">
-              {getFieldDecorator('payload.enable_coloradjust',  { valuePropName: 'checked' })(
+              {getFieldDecorator('payload.enable_coloradjust', { initialValue: false} )(
                 <Switch checkedChildren={'开'} unCheckedChildren={'关'} />
               )}
             </FormItem>
           </Col>
           <Col span={24}>
             <FormItem {...formItemLayout} extra="请就任务紧急程度度选择，以免延迟其他任务" label="是否紧急">
-              <Switch checkedChildren={'是'} unCheckedChildren={'否'} style={{ marginRight: 8 }} />
+              {getFieldDecorator('priority', { initialValue: false} )(
+                <Switch checkedChildren={'是'} unCheckedChildren={'否'} style={{ marginRight: 8 }} />
+              )}
             </FormItem>
           </Col>
           <Col span={24}>
             <FormItem {...formItemLayout} label="备注">
-              <Input type="textarea" autosize={{ minRows: 2, maxRows: 6 }} />
+              {getFieldDecorator('description')(
+                <Input type="textarea" autosize={{ minRows: 2, maxRows: 6 }} />
+              )}
             </FormItem>
           </Col>
         </Row>
       </Form>
     </Modal>
   );
-
 }
 
 export default Form.create()(TaskModal);

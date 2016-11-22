@@ -41,7 +41,7 @@ function Tasks({ location, dispatch, tasks }) {
       dispatch({
         type: 'tasks/query',
         payload: fieldsValue,
-      })
+      });
     },
 
     onAdd() {
@@ -50,7 +50,7 @@ function Tasks({ location, dispatch, tasks }) {
         payload: {
           modalType: 'create',
         }
-      })
+      });
     },
   }
 
@@ -69,7 +69,7 @@ function Tasks({ location, dispatch, tasks }) {
     onCancel(){
       dispatch({
         type: 'tasks/hideModal',
-      })
+      });
     },
 
   }

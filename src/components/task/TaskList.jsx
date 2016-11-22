@@ -61,9 +61,13 @@ const TaskList = ({
     key: 'processed',
     render: (text, record, index)=>{
       const processStatus = getProcessStatus(record.status);
-      return (<div style={{ width: 170 }}>
-        <Progress percent={record.processed} strokeWidth={5} status={processStatus.status} />
-      </div>);
+      return (
+        <div style={{ width: 170 }}>
+          <Progress percent={record.processed} 
+                    strokeWidth={5}
+                    status={processStatus.status} />
+        </div>
+      );
     },
   }, {
     title: '状态',
@@ -71,7 +75,9 @@ const TaskList = ({
     key: 'status',
     render: (text, record, index)=>{
       const taskStatus = getTaskStatus(record.status);
-      return (<Badge status={taskStatus.status} text={taskStatus.text} />);
+      return (
+        <Badge status={taskStatus.status} text={taskStatus.text} />
+      );
     },
     filters: [
       { text: '等待中', value: '1' },

@@ -28,7 +28,6 @@ function IndexPage() {
           <span className="logo-lg"><b>DK</b> VISION</span>
         </a>
         <nav className="navbar navbar-static-top">
-
           <div className="navbar-custom-menu">
             <ul className="nav navbar-nav">
               <li className="dropdown">
