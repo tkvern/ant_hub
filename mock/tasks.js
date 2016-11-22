@@ -93,7 +93,7 @@ module.exports = {
         return item[page.filed].indexOf(page.keyword) > -1;
       });
 
-      data = d.slice((currentPage - 1)) * pageSize, currentPage * pageSize);
+      data = d.slice((currentPage - 1) * pageSize, currentPage * pageSize);
 
       newPage = {
         current: currentPage * 1,
@@ -114,7 +114,7 @@ module.exports = {
         success: true,
         data,
         page: newPage,
-      })
+      });
     }, 200);
   },
 
@@ -158,7 +158,7 @@ module.exports = {
         success: true,
         data: tableListData.data,
         page: tableListData.page,
-      })
+      });
 
     }, 200);
   },
@@ -182,5 +182,5 @@ module.exports = {
         page: tableListData.page,
       });
     }, 200);
-  }
+  },
 };

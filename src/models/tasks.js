@@ -1,5 +1,6 @@
 import { hashHistory } from 'dva/router';
 import { query, create, remvoe, update } from '../services/tasks';
+import { parse } from 'qs';
 import pathToRegexp from 'path-to-regexp';
 
 export default {
@@ -40,13 +41,21 @@ export default {
     },
     deleteSuccess(){},
     updateSuccess(){},
+    updateQueryKey(state, action) {
+      return { ...state, ...action.payload };
+    },
   },
 
   effects: {
     *query({payload}, { select, call, put }) {
       yield put({ type: 'showLoading' });
-      const { data } = yield call(query);
-      if(data) {
+      yield put({
+        type: 'updateQueryKey',
+        payload: { page: 1, field: '', keyword: '', ...payload },
+      });
+
+      const { data } = yield call(query, parse(payload));
+      if (data) {
         yield put({
           type: 'querySuccess',
           payload: {
@@ -80,16 +89,16 @@ export default {
 
   subscriptions: {
     setup({ dispatch, history }) {
-      history.listen(({ pathname }) => {
+      history.listen(location => {
         // const match = pathToRegexp(`/tasks`).exec(pathname);
 
-        if(pathname === '/tasks') {
+        if(location.pathname === '/tasks') {
           dispatch({
             type: 'query',
-            payload: {}
+            payload: location.query,
           });
         }
       });
-    }
-  }
+    },
+  },
 }
