@@ -1,4 +1,5 @@
 import React, { Component, PropTypes } from 'react';
+import { routerRedux } from 'dva/router';
 import { connect } from 'dva';
 
 import MainLayout from '../../components/layout/MainLayout';
@@ -10,6 +11,8 @@ import TaskModal from '../../components/task//TaskModal';
 function Tasks({ location, dispatch, tasks }) {
   const {
     list,
+    field,
+    keyword,
     expand,
     total,
     loading,
@@ -24,9 +27,19 @@ function Tasks({ location, dispatch, tasks }) {
     current,
     loading,
     dataSource: list,
+    onPageChange(page) {
+      dispatch(
+        routerRedux.push({
+          pathname: '/tasks',
+          query: { field, keyword, page },
+        })
+      );
+    }
   }
 
   const taskSearchProps = {
+    field,
+    keyword,
     expand,
     onExpand() {
       dispatch({
@@ -38,19 +51,13 @@ function Tasks({ location, dispatch, tasks }) {
     },
 
     onSearch(fieldsValue) {
-      dispatch({
-        type: 'tasks/query',
-        payload: fieldsValue,
-      });
-    },
-
-    onAdd() {
-      dispatch({
-        type: 'users/showModal',
-        payload: {
-          modalType: 'create',
-        }
-      });
+      console.log(fieldsValue);
+      dispatch(
+        routerRedux.push({
+          pathname: '/tasks',
+          query: { ...fieldsValue, page: 1 },
+        })
+      );
     },
   }
 
@@ -82,7 +89,7 @@ function Tasks({ location, dispatch, tasks }) {
           modalType: 'create',
         }
       });
-    }
+    },
   }
 
   const TaskModalGen = () =>

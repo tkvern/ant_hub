@@ -1,12 +1,13 @@
 import React, { Component, PropTypes } from 'react';
-import { Table, message, Popconfirm, Menu, Dropdown, Icon, Progress, Badge } from 'antd';
+import { Table, message, Popconfirm, Pagination, Menu, Dropdown, Icon, Progress, Badge } from 'antd';
 import { getTaskStatus, getProcessStatus } from '../../utils/helper';
 
 const TaskList = ({
   total,
   current,
   loading,
-  dataSource
+  dataSource,
+  onPageChange,
 }) => {
   const menu = (
     <Menu>
@@ -102,13 +103,6 @@ const TaskList = ({
     ),
   }];
 
-  const pagination = {
-    total,
-    current,
-    pageSize: 10,
-    onChange: ()=>{},
-  };
-
   return (
     <div>
       <Table
@@ -116,7 +110,14 @@ const TaskList = ({
         dataSource={dataSource}
         loading={loading}
         rowKey={record => record.id}
-        pagination={pagination}
+        pagination={false}
+      />
+      <Pagination
+        className="ant-table-pagination"
+        total={total}
+        current={current}
+        pageSize={10}
+        onChange={onPageChange}
       />
     </div>
   );
@@ -127,6 +128,7 @@ TaskList.propTypes = {
   current: PropTypes.any,
   loading: PropTypes.any,
   dataSource: PropTypes.array,
+  onPageChange: PropTypes.func,
 }
 
 export default TaskList;
